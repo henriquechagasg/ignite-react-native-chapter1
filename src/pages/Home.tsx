@@ -70,7 +70,7 @@ export function Home() {
         renderItem={({item}) => (
           <>
             <SkillCard skill={item.name} />
-            <Button title="Add" onPress={() => handleRemoveSkill(item.id)} />
+            <Button title="Remove" onPress={() => handleRemoveSkill(item.id)} />
           </>
         )}
       />
