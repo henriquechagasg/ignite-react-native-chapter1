@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,20 @@ export function Home() {
 
   const [skills, setSkills] = useState([]);
 
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+      setGreeting('Good Morning');
+    } else if (currentHour >= 12 && currentHour < 18) {
+      setGreeting('Good Afternoon');
+    } else {
+      setGreeting('Good Night');
+    }
+  }, []);
+
   const handleAddNewSkill = () => {
     setSkills(oldSkills => [...oldSkills, newSkill]);
   };
@@ -22,6 +36,8 @@ export function Home() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, Henrique</Text>
+
+      <Text style={styles.greeting}>{greeting}</Text>
 
       <TextInput
         style={styles.input}
@@ -62,5 +78,8 @@ const styles = StyleSheet.create({
     padding: Platform.OS === 'ios' ? 15 : 10,
     marginVertical: 20,
     borderRadius: 7,
+  },
+  greeting: {
+    color: '#fff',
   },
 });
