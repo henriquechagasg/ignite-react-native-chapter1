@@ -10,7 +10,7 @@ import {
 import {Button} from '../components/Button';
 import {SkillCard} from '../components/SkillCard';
 
-interface SkillData {
+export interface SkillData {
   id: string;
   name: string;
 }
@@ -43,6 +43,10 @@ export function Home() {
     setSkills(oldSkills => [...oldSkills, data]);
   };
 
+  const handleRemoveSkill = (id: string) => {
+    setSkills(oldSkills => oldSkills.filter(skill => skill.id !== id));
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, Henrique</Text>
@@ -56,14 +60,19 @@ export function Home() {
         onChangeText={setNewSkill}
       />
 
-      <Button onPress={handleAddNewSkill} />
+      <Button title="Add" onPress={handleAddNewSkill} />
 
       <Text style={[styles.title, {marginVertical: 50}]}>My Skills</Text>
 
       <FlatList
         data={skills}
         keyExtractor={item => item.id}
-        renderItem={({item}) => <SkillCard skill={item} />}
+        renderItem={({item}) => (
+          <>
+            <SkillCard skill={item.name} />
+            <Button title="Add" onPress={() => handleRemoveSkill(item.id)} />
+          </>
+        )}
       />
     </View>
   );
